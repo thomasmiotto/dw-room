@@ -1,4 +1,9 @@
-import styles from './page.module.css';
+import Head from 'next/head';
+import styles from './app.module.css';
+
+const pageMetadata = {
+  title: 'Dental Waiting Room'
+};
 
 export default function NextPatient() {
   const waitingRooms = new Map(Object.entries({
@@ -51,6 +56,9 @@ export default function NextPatient() {
 
   return (
     <main className={'container'}>
+      <Head>
+        <title>{pageMetadata.title}</title>
+      </Head>
       <div className={'row'}>
         <div className={`col-6 d-flex flex-column align-content-center justify-content-center ${styles.waitingRoom} waiting-room--A`}>
           {
