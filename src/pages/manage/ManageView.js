@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import styles from './manage.module.css';
+import { getWaitingRoomColor } from '@/shared/colors';
 
 const pageMetadata = {
   title: 'Dental Waiting Room - Manage'
@@ -11,14 +11,19 @@ export default function ManageView({waitingRooms}) {
     const display = [];
     waitingRooms.forEach((appointments, room) => {
       display.push(
-        <div className={styles.waitingRoom} key={`room-${room}`}>
-          <h3 className={styles.waitingRoomTitle}>{`Salle ${room}`}</h3>
+        <div className={`mt-4`} key={`room-${room}`}>
+          <h3 className={`px-3 py-2 ${getWaitingRoomColor(room)}`}>{`Salle ${room}`}</h3>
+
           {
             appointments.map((appointment, index) =>
-              <div className={`${styles.waitingRoomPatient} ${styles['waitingRoomPatient' + appointment.reference.charAt(2)]}`} key={`appointment-${appointment.reference}`}>
-                {appointment.name}
-                {index !== appointments.length - 1 && <span className={styles.waitingRoomSeparator}></span>}
+            <>
+              <div className={`card mb-2`} key={`appointment-${appointment.reference}`}>
+                <div className={'card-body'}>
+                  {appointment.name}&nbsp;|&nbsp;{appointment.noSS}
+                </div>
               </div>
+              {index !== appointments.length - 1 && <span className={'px-3 material-icons material-symbols-outlined'}>arrow_downward</span>}
+            </>
             )
           }
         </div>
@@ -28,7 +33,7 @@ export default function ManageView({waitingRooms}) {
   }
 
   return (
-    <main className={'container'}>
+    <main className={'container my-5'}>
       <Head>
         <title>{pageMetadata.title}</title>
       </Head>

@@ -9,20 +9,20 @@ export default function NextPatientView({waitingRooms}) {
 
   const displayRoom = (room) => {
     let nextAppointement;
-    const appointments = waitingRooms.get(room);
-    nextAppointement = appointments ? appointments[0] : undefined;
+    const appointments = waitingRooms ? waitingRooms.get(room) : [];
+    nextAppointement = waitingRooms ? appointments[0] : undefined;
 
-    return <>
-      <div className={`d-flex justify-content-center waiting-room__title waiting-room__title--${room}`}>
-        {`Salle ${room}`}
+    return <div className={'card-body d-flex flex-column justify-content-center'}>
+      <div className={`d-flex justify-content-center`}>
+        <h1>{`Salle ${room}`}</h1>
       </div>
       {
         nextAppointement && <>
-          <div className='d-flex justify-content-center waiting-room__patient-reference'>{nextAppointement.reference}</div>
-          <div className='d-flex justify-content-center waiting-room__patient-name'>{nextAppointement.name}</div>
+          <div className='d-flex justify-content-center'>{nextAppointement.reference}</div>
+          <div className='d-flex justify-content-center display-4'>{nextAppointement.name}</div>
         </>
       }
-    </>
+    </div>
   };
 
   return (
@@ -31,24 +31,24 @@ export default function NextPatientView({waitingRooms}) {
         <title>{pageMetadata.title}</title>
       </Head>
       <div className={'row'}>
-        <div className={`col-6 d-flex flex-column align-content-center justify-content-center ${styles.waitingRoom} waiting-room--A`}>
+        <div className={`col-5 card mt-5 ${styles.waitingRoom} bg-secondary`}>
           {
             displayRoom('A')
           }
         </div>
-        <div className={`col-6 d-flex flex-column align-content-center justify-content-center ${styles.waitingRoom} waiting-room--B`}>
+        <div className={`col-5 offset-1 card mt-5 ${styles.waitingRoom} bg-warning`}>
           {
             displayRoom('C')
           }
         </div>
       </div>
       <div className={'row'}>
-        <div className={`col-6 d-flex flex-column align-content-center justify-content-center ${styles.waitingRoom} waiting-room--C`}>
+        <div className={`col-5 card mt-5 ${styles.waitingRoom} bg-warning`}>
           {
             displayRoom('B')
           }
         </div>
-        <div className={`col-6 d-flex flex-column align-content-center justify-content-center ${styles.waitingRoom} waiting-room--B`}>
+        <div className={`col-5 offset-1 card mt-5 ${styles.waitingRoom} bg-success`}>
           {
             displayRoom('D')
           }
