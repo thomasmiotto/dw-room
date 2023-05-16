@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "playwright test"
+    "test": "playwright test --ui",
+    "test:ci": "playwright test"
   },
   "dependencies": {
     "eslint": "8.39.0",
