@@ -11,15 +11,15 @@
     "test:ci": "playwright test"
   },
   "dependencies": {
-    "eslint": "8.39.0",
-    "eslint-config-next": "13.4.0",
-    "next": "13.4.0",
+    "eslint": "8.49.0",
+    "eslint-config-next": "13.4.19",
+    "next": "13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "swr": "^2.1.5"
+    "swr": "^2.2.2"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.7.0",
-    "@playwright/test": "^1.33.0"
+    "@axe-core/playwright": "^4.7.3",
+    "@playwright/test": "^1.37.1"
   }
 }
