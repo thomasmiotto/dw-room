@@ -31,18 +31,42 @@ export default function ManageView({waitingRooms}) {
     });
     return display;
   }
-
+  
   return (
     <main className={'container my-5'}>
       <Head>
         <title>{pageMetadata.title}</title>
       </Head>
-      <section className={'row'}>
-        <h2>Salles d'attente</h2>
-        {
-          displayWaitingRooms()
-        }
-      </section>
+
+    <div>
+      <form>
+        <label>Nom :</label>
+        <input type='text' id='nom' name="name" required/>
+
+        <label>Prénom :</label>
+        <input type='text' id='prenom' name="prenom" required/>
+
+        <label for="numero">Numéro Sécurité Sociale:</label>
+        <input type="text" id="numero" name="numero" pattern="[0-9]{13}" minlength="13" maxlength="13" required/>
+
+        <br></br>
+        <label>Mail & Téléphone :</label>
+        <input type='text' id='mail' name="mail" required/>
+        <input type='text' id='phone' name="tel" pattern="[0-9]{10}" minlength="10" maxlength="10" required/>
+
+        <input type="submit" value="Valider"/>
+      </form>
+    </div>
+
+
+      <div>
+        <section className={'row'}>
+          <h2>Salles d'attente</h2>
+          {
+            displayWaitingRooms()
+          }
+        </section>
+      </div>
     </main>
   );
 }
