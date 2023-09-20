@@ -36,7 +36,7 @@ export default function NextPatientView({waitingRooms}) {
             displayRoom('A')
           }
         </div>
-        <div className={`col-5 offset-1 card mt-5 ${styles.waitingRoom} bg-warning`}>
+        <div className={`col-5 offset-1 card mt-5 ${styles.waitingRoom} bg-info`}>
           {
             displayRoom('C')
           }
