@@ -126,62 +126,73 @@ export default function ManageView({ waitingRooms }) {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+  event.preventDefault();
 
-    const nom = event.target.nom.value;
-    const prenom = event.target.prenom.value;
-    const numero = event.target.numero.value;
-    const mail = event.target.mail.value;
-    const tel = event.target.tel.value;
-    const specialite = event.target.specialite.value;
-    const id = event.target.id.value;
+  const nom = event.target.nom.value;
+  const prenom = event.target.prenom.value;
+  let numero = event.target.numero.value;
+  const mail = event.target.mail.value;
+  const tel = event.target.tel.value;
+  const specialite = event.target.specialite.value;
+  const id = event.target.id.value;
 
-    const nameRegex = /^[A-Za-zÀ-ÿ\s-]{3,20}$/;
-    const numeroRegex =
-      /^[12][0-9]{2}(0[1-9]|1[0-2])(2[AB]|[0-9]{2})[0-9]{3}[0-9]{3}$/;
-    const telRegex = /^[0-9]{10}$/;
-    const idRegex = /^[0-9]{3}$/;
-    const validationErrors = {};
+  // Remove any spaces from the 'numero' input
+  numero = numero.replace(/\s/g, '');
 
-    if (!nom.match(nameRegex)) {
-      validationErrors.name = "Le nom ne doit contenir que des lettres";
-    }
-    if (!prenom.match(nameRegex)) {
-      validationErrors.prenom = "Le prénom ne doit contenir que des lettres";
-    }
-    if (!numero.match(numeroRegex)) {
-      validationErrors.numero = "Numéro Sécurité Sociale est invalide";
-    }
+  const nameRegex = /^[A-Za-zÀ-ÿ\s-]{2,20}$/;
+  const numeroRegex =
+    /^[12][0-9]{2}(0[1-9]|1[0-2])(2[AB]|[0-9]{2})[0-9]{3}[0-9]{3}$/;
+  const telRegex = /^[0-9]{10}$/;
+  const idRegex = /^[0-9]{3}$/;
+  const validationErrors = {};
 
-    if (!tel.match(telRegex)) {
-      validationErrors.tel = "Le numero de Telephone est invalide";
-    }
-    if (!id.match(idRegex)) {
-      validationErrors.id = "Le numero de l'id est invalide";
-    }
+  if (!nom.match(nameRegex)) {
+    validationErrors.nom = "Le nom ne doit contenir que des lettres";
+  }
+  if (!prenom.match(nameRegex)) {
+    validationErrors.prenom = "Le prénom ne doit contenir que des lettres";
+  }
+  if (!numero.match(numeroRegex)) {
+    validationErrors.numero = "Numéro Sécurité Sociale est invalide";
+  }
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-    event.target.reset();
-    setErrors({});
-    const patient = {
-      id: `#${specialite}${id}`,
-      numero,
-      prenom,
-      nom,
-      mail,
-      tel,
-    };
-    fetch(`${API_BASE_URL}/waiting-rooms`, {
-      body: JSON.stringify(patient),
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-    });
+  if (!tel.match(telRegex)) {
+    validationErrors.tel = "Le numéro de téléphone est invalide";
+  }
+  if (!id.match(idRegex)) {
+    validationErrors.id = "L'ID doit contenir exactement 3 chiffres";
+  }
+
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
+  event.target.reset();
+  setErrors({});
+  
+  numero = numero.replace(
+    /(\d)(\d{2})(\d{2})(\d{2})(\d{3})(\d{3})/g,
+    "$1 $2 $3 $4 $5 $6"
+  );
+  const patient = {
+    id: `#${specialite}${id}`,
+    numero,
+    prenom,
+    nom,
+    mail,
+    tel,
   };
+  fetch(`${API_BASE_URL}/waiting-rooms`, {
+    body: JSON.stringify(patient),
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+};
+
+
+
 
   return (
     <main className={"container my-5"}>
